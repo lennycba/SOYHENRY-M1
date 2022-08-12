@@ -15,9 +15,12 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 */
 
 function nFactorial(n) {
+ return n < 2 ? n : n * nFactorial(n-1);
+ 
 }
 
 function nFibonacci(n) {
+  return n < 2 ? n : nFibonacci(n-2)+ nFibonacci(n-1);
 }
 
 /*
@@ -30,7 +33,18 @@ Pueden utilizar class o función constructora.
 */
 
 function Queue() {
+  this.array = [];
+}
+Queue.prototype.size = function(){
+  return this.array.length;
+};
 
+Queue.prototype.enqueue = function(arg){
+  return this.array.push(arg);
+}
+
+Queue.prototype.dequeue = function(arg){
+  return this.array.shift(arg);
 }
 
 // No modifiquen nada debajo de esta linea

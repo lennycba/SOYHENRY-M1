@@ -5,10 +5,14 @@
   "scripts": {
     "test": "jest --collectCoverage=false DataStructureI.test.js",
     "grade": "jest --useStderr --json --outputFile=./tests/result.json"
+    
   },
   "devDependencies": {
     "jest": "^27.5.1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.19"
+  }
 }
