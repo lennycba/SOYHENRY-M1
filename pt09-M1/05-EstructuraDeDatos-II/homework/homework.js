@@ -97,7 +97,57 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {  //creo la hash table con la cantidad de buckets y donde se almacenan
+  this.numBuckets = 35;
+  this.buckets = []; //cada bucket es una posicion en el array 
+}
+
+//la funcion suma el charCodeAt de cada letra y luego divide ese valor por la cantidad de buckets retornando EL MODULO de esa division
+HashTable.prototype.hash = function(key){ //recibo una key
+  let suma = 0; //inicializo un acumulador
+  for (let i = 0; i < key.length; i++) {
+    suma += key.charCodeAt(i); //iterando sumo el charCodeAt de cada letra
+  }
+  return suma % this.numBuckets; //divido el acumulador por la cant. de buckets y retorno el modulo
+};
+//-----------------------------------------------------------------------------------------
+//una vez que ya tengo la funcion que se va a encargar de organizar las keys en los buckets creo las funciones set get y hasKey
+
+//1--voy a recibir una clave y un valor, primero verifico que la clave sea una string, si no lo es ARROJO un error de tipo
+//2--si es una clave válida la paso por la funcion hasheadora para obtener el bucket en que se va a almacenar
+//3--puede darse que dos keys distintas vayan a parar al mismo bucket, para evitar colisiones (errores o sobreescritura) cada vez que una clave va a parar a un bucket vacío creo un objeto nuevo, ahora cada bucket es un objeto por lo que no importa si mas que dos claves compartan bucket se almacenaran como pares clave-valor dentro del bucket.
+//4-- finalmente almaceno el par clave-valor en el bucket (let posicion) correspondiente 
+HashTable.prototype.set = function(key, value){
+if (typeof (key) !== 'string') throw new TypeError ('Keys must be a string');
+  let posicion = this.hash(key);
+  if (this.buckets[posicion] === undefined){
+    this.buckets[posicion] = {};
+  }
+  this.buckets[posicion][key] = value;
+};
+//----------------------------------------------------------------------------------------
+//1--voy a recibir una key y la funcion deberá devolver el valor correspondiente a esa key (agregado fuera de ejercicio validacion de key)
+//2--hasheando la key averiguo el bucket donde DEBERIA estar almacenado el par clave-valor
+//3--(en la validacion verifico si en el bucket verdaderamente esta la key que me piden)
+//4--si la key existe retorno el valor correspondiente a esa key
+//--si la key NO existe retorno un error
+
+HashTable.prototype.get = function(key){
+  if (typeof (key) !== 'string') throw new TypeError ('Keys must be a string');
+  let posicion = this.hash(key);
+  if (this.buckets[posicion].hasOwnProperty(key)){
+    return this.buckets [posicion] [key];
+  }else return 'la propiedad '+ key + ' no está definida'; 
+};
+//------------------------------------------------------------------------------------------
+//recibo una key y debo retornar un booleano que indique si esa key existe o no en el bucket correspondiente
+//1--hasheo la key para obtener el bucket donde debería estar almacenado
+//2--usando hasOwnProperty puedo verificar CON UN BOOLEANO si la key existe en ese bucket
+HashTable.prototype.hasKey = function(key){
+  if (typeof (key) !== 'string') throw new TypeError ('Keys must be a string');
+  let posicion = this.hash(key);
+  return this.buckets[posicion].hasOwnProperty(key);
+};
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
