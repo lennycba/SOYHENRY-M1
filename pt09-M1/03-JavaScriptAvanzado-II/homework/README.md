@@ -27,6 +27,33 @@ console.log('hola'.repeatify(3));   //holaholahola
 
 Probá tu solución con el siguiente código:
 
+const Shape = {
+    type: 'forma basica',
+  	getType: function (){
+return this.type;
+}
+};
+
+function Triangle (a,b,c){
+    type : 'Triangle',
+  	this.a = a,
+    this.b = b,
+    this.c = c
+};
+
+Object.setPrototypeOf(Triangle,Shape);
+
+Triangle.prototype.getPerimeter = function (){
+  return this.a + this.b + this.c;
+}
+
+var t = new Triangle(1, 2, 3);
+
+console.log (t instanceof Triangle);
+console.log(t.getPerimeter());
+console.log(t.getType());
+
+
 ```javascript
 > var t = new Triangle(1, 2, 3);
 > t instanceof Triangle
