@@ -155,7 +155,7 @@ console.log(obj.prop.getFullname()); //'Aurelio De Rosa' (el this lo condiciona 
 
 var test = obj.prop.getFullname;
 
-console.log(test());  // undefined (la funcion esta mal definida, se intenta invocar desde fuera del entorno de ejecución)
+console.log(test());  // juan perez (la función es llamada desde el entorno global, por ende el this hace referencia al entorno global)
 ```
 
 ### Event loop
