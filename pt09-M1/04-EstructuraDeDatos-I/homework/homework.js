@@ -15,7 +15,7 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 */
 
 function nFactorial(n) {
- return n < 2 ? n : n * nFactorial(n-1);
+ return n > -1 && n < 2 ? n : n * nFactorial(n-1);
  
 }
 
@@ -43,8 +43,8 @@ Queue.prototype.enqueue = function(arg){
   return this.array.push(arg);
 }
 
-Queue.prototype.dequeue = function(arg){
-  return this.array.shift(arg);
+Queue.prototype.dequeue = function(){
+  return this.array.shift();
 }
 
 // No modifiquen nada debajo de esta linea
